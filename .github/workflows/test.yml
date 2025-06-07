@@ -1,0 +1,25 @@
+name: GCD Script Test
+
+on:
+  push:
+    paths:
+      - '**.sh'
+      - '.github/workflows/test.yml'
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v3
+
+      - name: 実行権限を付与
+        run: chmod +x Calculation_GCD.sh Calculation_GCD_TEST.sh
+
+      - name: テスト実行
+        run: ./Calculation_GCD_TEST.sh
+
+      - name: JUnit出力が存在するか確認
+        run: cat test_results.xml || echo "JUnit出力が存在しません"
